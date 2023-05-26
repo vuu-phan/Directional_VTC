@@ -27,9 +27,9 @@ We assume that you already did pre-processing steps (e.g., filling missing gaps,
 The calculation of VTC requires:
 - **Center-of-pressure (CoP)** - measured by force platform(s). We typically use net CoP displacements for the VTC calculation. If you have CoP data under each foot, you can obtain the net CoP based on the following equation ([Winter](https://www.sciencedirect.com/science/article/pii/0966636296828499), 1995). 
 
-$$COP_{net} = COP_{l} \times {R_{vl} \over R_{vl} + R_{vr}} + COP_{r}$$
+$$COP_{net} = COP_{l} \times {R_{vl} \over R_{vl} + R_{vr}} + COP_{r} \times {R_{vr} \over R_{vl} + R_{vr}}$$
 
-$$\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)$$
+where, $COP_{l}$ and R_{vl} is the COP and vertical ground reaction force under the left foot, respectively, while $COP_{r}$ and R_{vr} is the COP and vertical ground reaction force under the right foot.
 
 - **Boundary** or **base of support (BoS)** - either measured by a marker-based motion capture system or other means. We use a trapezoid (or its special case, a rectangle) fitting participant's feet as the BoS. Future updates will address more complex shapes of the BoS or use functional limit of stability for the VTC calculation.
 
