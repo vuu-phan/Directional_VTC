@@ -18,15 +18,18 @@ $ Directory tree
     └── visualizer.py
 ```
 
-See [our publication](https://www.sciencedirect.com/science/article/pii/S0021929022004699) for more detail of the method and testing scenarios. 
+See [our publication](https://www.sciencedirect.com/science/article/pii/S0021929022004699) on the *Journal of Biomechanics* for more detail of the method and testing scenarios. 
 
 ## Importance before Using the Code
 We assume that you already did pre-processing steps (e.g., filling missing gaps, filtering, etc.) on your data before using the code. 
 
 ## Step 1: Preparing Your Data
 The calculation of VTC requires:
-- Center-of-pressure (CoP) - measured by force platform(s). We typically use net CoP displacements for the VTC calculation. If you have CoP data under each foot, you can obtain the net CoP based on this past paper by [Winter](https://www.sciencedirect.com/science/article/pii/0966636296828499). 
-- Boundary or base of support (BoS) - either measured by a marker-based motion capture system or other means. We use a trapezoid (or in special case, a rectangle) fitting participant's feet as the BoS. Future updates should address more complex shapes of the BoS or use functional limit of stability for the VTC calculation.
+- **Center-of-pressure (CoP)** - measured by force platform(s). We typically use net CoP displacements for the VTC calculation. If you have CoP data under each foot, you can obtain the net CoP based on the following equation ([Winter](https://www.sciencedirect.com/science/article/pii/0966636296828499), 1995). 
+
+$COP_{net} = COP_{l} \frac{R_{vl}}{R_{vl} + R_{vr}} + COP_{r} \frac{R_{vr}{R_{vl} + R_{vr}}$
+
+- **Boundary** or **base of support (BoS)** - either measured by a marker-based motion capture system or other means. We use a trapezoid (or its special case, a rectangle) fitting participant's feet as the BoS. Future updates will address more complex shapes of the BoS or use functional limit of stability for the VTC calculation.
 
 ## Step 2: Formatting Your Data
 ### Center-of-pressure (CoP)
