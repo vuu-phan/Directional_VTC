@@ -29,7 +29,7 @@ The calculation of VTC requires:
 
 $$COP_{net} = COP_{l} \times {R_{vl} \over R_{vl} + R_{vr}} + COP_{r} \times {R_{vr} \over R_{vl} + R_{vr}}$$
 
-where, $COP_{l}$ and $R_{vl}$ is the COP and vertical ground reaction force under the left foot, respectively, while $COP_{r}$ and $R_{vr}$ is the COP and vertical ground reaction force under the right foot.
+where, $COP_{l}$ and $R_{vl}$ is the COP and vertical ground reaction force under the *left* foot, respectively; while $COP_{r}$ and $R_{vr}$ is, respectively, the COP and vertical ground reaction force under the *right* foot.
 
 - **Boundary** or **base of support (BoS)** - either measured by a marker-based motion capture system or other means. We use a trapezoid (or its special case, a rectangle) fitting participant's feet as the BoS. Future updates will address more complex shapes of the BoS or use functional limit of stability for the VTC calculation.
 
