@@ -24,11 +24,18 @@ See [our publication](https://www.sciencedirect.com/science/article/pii/S0021929
 We assume that you already did pre-processing steps (e.g., filling missing gaps, filtering, etc.) on your data before using the code. 
 
 ## Preparing Your Data
-The calculation of directional VTC requires center-of-pressure (CoP) trajectories and base of support (BoS). We initially used the net CoP for calculation but it should work for CoP under each foot too. The BoS can be either measured by a marker-based motion capture system or other means. We use a trapezoid (or its special case, a rectangle) fitting participant's feet as the BoS. Future updates will address more complex shapes of the BoS or use functional limit of stability for the VTC calculation.
+The calculation of directional VTC requires center-of-pressure (CoP) trajectories and base of support (BoS). 
+
+We initially used the net CoP for calculation but it should work for CoP under each foot too. 
+
+The BoS can be either measured by a marker-based motion capture system or other means. We use a trapezoid (or its special case, a rectangle) fitting participant's feet as the BoS. Future updates will address more complex shapes of the BoS or use functional limit of stability for the VTC calculation.
 
 <p align="center">
   <img width="460" height="300" src="figures/cop_bos.png">
-  <p>An example of the CoP and BoS</p>
+</p>
+
+<p align="center">
+  An example of the CoP and BoS
 </p>
 
 ## Using the MATLAB Code
