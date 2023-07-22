@@ -5,16 +5,17 @@ This repository contains the implementation of customized functions for directio
 ```
 $ Directory tree
 .
-├── data\
-│   ├── sample_cop.csv
+├── code_python\
+│   ├── main.py
+│   ├── visualizer.py
+│   └── vtc_utils.py
 ├── code_matlab\
-│   ├── main.m
-│   ├── vtc_utils.m
-│   └── visualizer.m
-└── code_python\
-    ├── main.py
-    ├── vtc_utils.py
-    └── visualizer.py
+│   ├── get_vtc.m
+│   ├── get_vtc_outcomes.m
+│   ├── get_vtc_series.m
+│   └── main.m
+└── data\
+    └── sample_cop.csv
 ```
 
 See [our publication](https://www.sciencedirect.com/science/article/pii/S0021929022004699) on the *Journal of Biomechanics* for more detail of the method and testing scenarios. 
@@ -23,21 +24,57 @@ See [our publication](https://www.sciencedirect.com/science/article/pii/S0021929
 We assume that you already did pre-processing steps (e.g., filling missing gaps, filtering, etc.) on your data before using the code. 
 
 ## Preparing Your Data
-The calculation of VTC requires:
-- **Center-of-pressure (CoP)** - measured by force platform(s). We typically use net CoP displacements for the VTC calculation. If you have CoP data under each foot, you can obtain the net CoP based on the following equation ([Winter](https://www.sciencedirect.com/science/article/pii/0966636296828499), 1995). 
+The calculation of directional VTC requires center-of-pressure (CoP) trajectories and base of support (BoS). We initially used the net CoP for calculation but it should work for CoP under each foot too. The BoS can be either measured by a marker-based motion capture system or other means. We use a trapezoid (or its special case, a rectangle) fitting participant's feet as the BoS. Future updates will address more complex shapes of the BoS or use functional limit of stability for the VTC calculation.
 
-$$COP_{net} = COP_{l} \times {R_{vl} \over R_{vl} + R_{vr}} + COP_{r} \times {R_{vr} \over R_{vl} + R_{vr}}$$
-
-where, $COP_{l}$ and $R_{vl}$ is the COP and vertical ground reaction force under the *left* foot, respectively; while $COP_{r}$ and $R_{vr}$ is, respectively, the COP and vertical ground reaction force under the *right* foot.
-
-- **Boundary** or **base of support (BoS)** - either measured by a marker-based motion capture system or other means. We use a trapezoid (or its special case, a rectangle) fitting participant's feet as the BoS. Future updates will address more complex shapes of the BoS or use functional limit of stability for the VTC calculation.
-
-![figure [exercise]: COP and BOS](figures/cop_bos.png)
+<p align="center">
+  <img width="460" height="300" src="figures/cop_bos.png">
+  An example of the CoP and BoS
+</p>
 
 ## Using the MATLAB Code
 *(See this if you are using MATLAB for your analysis)*
 
-Coming soon ...
+```python
+clear
+close all
+clc
+
+% Constants
+IDX = 2;
+IDY = 3;
+fs = 2000; % Hz
+
+% Boundary
+% YOU NEED TO MEASURES BOS OF YOUR PARTICIPANT AND ENTER IT HERE -->
+bos   = struct();
+bos.A = [10, -10];
+bos.B = [15, 20];
+bos.C = [-15, 20];
+bos.D = [-10, -10];
+% <-- YOU NEED TO MEASURES BOS OF YOUR PARTICIPANT AND ENTER IT HERE
+
+% Get CoP data
+dt = readmatrix("../data/sample_cop.csv");
+
+cop   = struct();
+cop.x = dt(:, IDX);
+cop.y = dt(:, IDY);
+
+% Obtain VTC time-series
+[vtc_s, bc_s] = get_vtc_series(cop, bos, fs);
+
+% Calculate directional VTC outcomes
+[outcomes] = get_vtc_outcomes(vtc_s, bc_s, fs);
+
+fprintf("2D VTC mean = %.2f (s)\n", outcomes(1));
+fprintf("AP VTC mean = %.2f (s)\n", outcomes(2));
+fprintf("ML VTC mean = %.2f (s)\n", outcomes(3));
+fprintf("AP BC = %.2f (percents) \n", outcomes(4));
+fprintf("ML BC = %.2f (percents) \n", outcomes(5));
+fprintf("Switching rate = %.2f (Hz)\n", outcomes(6));
+```
+
+You may add your self-defined threshold as the 4th parameter in `get_vtc_outcomes`, for example, `get_vtc_outcomes(vtc_s, bc_s, fs, 5)`.
 
 
 ## Using the Python Code
@@ -93,6 +130,8 @@ visualizer.plot_cop(cop, bos)
 visualizer.plot_ts(time[2::], vtc_s, thres = outcomes[-1])
 visualizer.plot_ts(time[2::], bc_s)
 ```
+
+You may add your self-defined threshold as the 4th parameter in `get_vtc_outcomes`, for example, `get_vtc_outcomes(vtc_s, bc_s, fs, sw_thres = 5)`.
 
 ## Citation
 
