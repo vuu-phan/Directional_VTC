@@ -28,7 +28,7 @@ The calculation of directional VTC requires center-of-pressure (CoP) trajectorie
 
 <p align="center">
   <img width="460" height="300" src="figures/cop_bos.png">
-  An example of the CoP and BoS
+  <p>An example of the CoP and BoS</p>
 </p>
 
 ## Using the MATLAB Code
