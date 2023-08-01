@@ -134,7 +134,7 @@ print('Switching rate = ' + str(round(outcomes[5], 2)) + ' (Hz)')
 visualizer.plot_cop(cop, bos)
 
 # Plot time-series data
-visualizer.plot_ts(time[2::], vtc_s, thres = outcomes[-1])
+visualizer.plot_ts(time[2::], vtc_s)
 visualizer.plot_ts(time[2::], bc_s)
 ```
 
